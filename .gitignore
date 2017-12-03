@@ -1,0 +1,47 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Symfony template
+# Cache and logs (Symfony2)
+blog/app/cache/*
+blog/app/logs/*
+!blog/app/cache/.gitkeep
+!blog/app/logs/.gitkeep
+
+# Email spool folder
+blog/app/spool/*
+
+# Cache, session files and logs (Symfony3)
+blog/var/cache/*
+blog/var/logs/*
+blog/var/sessions/*
+!blog/var/cache/.gitkeep
+!blog/var/logs/.gitkeep
+!blog/var/sessions/.gitkeep
+
+# Parameters
+blog/app/config/parameters.yml
+blog/app/config/parameters.ini
+
+# Managed by Composer
+blog/app/bootstrap.php.cache
+blog/var/bootstrap.php.cache
+blog/bin/*
+blog/bin/console
+blog/bin/symfony_requirements
+
+# Assets and user uploads
+blog/web/bundles/
+blog/web/uploads/
+
+# PHPUnit
+blog/app/phpunit.xml
+blog/phpunit.xml
+
+# Build data
+blog/build/
+
+# Backup entities generated with doctrine:generate:entities command
+**/Entity/*~
+
+# Embedded web-server pid file
+blog/.web-server-pid
+

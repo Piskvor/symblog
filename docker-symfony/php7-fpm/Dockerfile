@@ -33,8 +33,12 @@ RUN echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-
 RUN echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+RUN usermod -u 1000 www-data
 
 RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
 RUN echo 'alias sf3="php bin/console"' >> ~/.bashrc
 
 WORKDIR /var/www/symfony
+
+RUN mkdir -p /var/www/symfony/var/cache/dev/profiler
+RUN chmod -R 777 /var/www/symfony/var/cache

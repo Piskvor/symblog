@@ -21,7 +21,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/private")
+     * @Route("/private", name="private")
      */
     public function privateAction()
     {

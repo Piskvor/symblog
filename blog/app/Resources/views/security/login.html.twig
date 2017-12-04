@@ -1,21 +1,31 @@
 {% extends 'base.html.twig' %}
 {% block title %}Please enter credentials.{% endblock %}
 {% block body %}
-{% if error %}
+    <div id="wrapper">
+
+    {% if error %}
     <div>{{ error.message }}</div>
-{% endif %}
+    {% endif %}
 
-<form action="{{ path('login') }}?me=𝝅🐛" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
-    <label>Username:
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
-    </label>
-    <label>Passphrase:
-        <input type="password" id="password" name="_password" />
-    </label>
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}" />
-    <input type="hidden" name="wakaWakaWaka" value="·····•····· ᗤ ᗣᗣᗣᗣ"><!-- ugly hack, but forces UTF-8, even on *special* browsers -->
-    <button type="submit">Log in</button>
-</form>
+    <form action="{{ path('login') }}?me=𝝅🐛" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+        <div><label><div class="form-title">Username:</div>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        </label>
+        </div>
+    <div>
+        <label><div class="form-title">Passphrase:</div>
+            <input type="password" id="password" name="_password" />
+        </label>
+    </div>
+    <div>
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}" />
+        <input type="hidden" name="wakaWakaWaka" value="·····•····· ᗤ ᗣᗣᗣᗣ"><!-- ugly hack, but forces UTF-8, even on *special* browsers -->
+        <button type="submit">Log in</button>
+    </div>
+    </form>
 
+    </div>
+{% endblock %}
+{% block login %}
 {% endblock %}

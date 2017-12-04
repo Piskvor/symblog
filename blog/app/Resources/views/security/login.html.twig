@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}Please enter credentials.{% endblock %}
+{% block body %}
+{% if error %}
+    <div>{{ error.message }}</div>
+{% endif %}
+
+<form action="{{ path('login') }}?me=𝝅🐛" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+    <label>Username:
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    </label>
+    <label>Passphrase:
+        <input type="password" id="password" name="_password" />
+    </label>
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}" />
+    <input type="hidden" name="wakaWakaWaka" value="·····•····· ᗤ ᗣᗣᗣᗣ"><!-- ugly hack, but forces UTF-8, even on *special* browsers -->
+    <button type="submit">Log in</button>
+</form>
+
+{% endblock %}

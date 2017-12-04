@@ -16,7 +16,7 @@ class BlogUser implements UserInterface, \Serializable
     public function __construct($username, $password)
     {
         $this->setUsername($username);
-        $this->setHash($password); // note that we're encoding via bcrypt
+        $this->setHash(password_hash($password, \PASSWORD_BCRYPT, [ "cost" => 14 ])); // note that we're encoding via bcrypt
     }
 
     /**
@@ -37,22 +37,17 @@ class BlogUser implements UserInterface, \Serializable
      */
     private $hash;
     /**
-     * @ORM\Column(type="string", length=64)
-     * @var string
-     */
-    private $salt;
-    /**
      * @ORM\Column(name="is_active", type="boolean")
      * @var bool
      */
-    private $isActive;
+    private $isActive = true;
 
     /**
      * @return string
      */
     public function getSalt(): string
     {
-        return $this->salt;
+        return '';
     }
 
     /**
@@ -60,7 +55,6 @@ class BlogUser implements UserInterface, \Serializable
      */
     public function setSalt(string $salt)
     {
-        $this->salt = $salt;
     }
 
     /**
@@ -82,8 +76,7 @@ class BlogUser implements UserInterface, \Serializable
         return serialize(array(
             $this->id,
             $this->username,
-            $this->hash,
-            $this->salt,
+            $this->hash
         ));
     }
 
@@ -95,8 +88,7 @@ class BlogUser implements UserInterface, \Serializable
         list (
             $this->id,
             $this->username,
-            $this->hash,
-            $this->salt
+            $this->hash
             ) = unserialize($serialized);
     }
 

@@ -8,8 +8,8 @@ use /** @noinspection PhpUnusedAliasInspection - used by annotations */
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="blog_user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogUserRepository")
  */
 class BlogUser implements UserInterface, \Serializable
 {

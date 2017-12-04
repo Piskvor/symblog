@@ -13,6 +13,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class BlogUser implements UserInterface, \Serializable
 {
+    public function __construct($username, $password)
+    {
+        $this->setUsername($username);
+        $this->setHash($password); // note that we're encoding via bcrypt
+    }
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

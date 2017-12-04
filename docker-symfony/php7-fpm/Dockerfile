@@ -39,6 +39,3 @@ RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
 RUN echo 'alias sf3="php bin/console"' >> ~/.bashrc
 
 WORKDIR /var/www/symfony
-
-RUN mkdir -p /var/www/symfony/var/cache/dev/profiler
-RUN chmod -R 777 /var/www/symfony/var/cache

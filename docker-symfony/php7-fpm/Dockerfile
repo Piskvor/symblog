@@ -39,3 +39,5 @@ RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
 RUN echo 'alias sf3="php bin/console"' >> ~/.bashrc
 
 WORKDIR /var/www/symfony
+
+COPY firstrun.sh bin/

@@ -32,6 +32,25 @@ code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break
 #welcome h1 span { display: block; font-size: 75%; }
 #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
 #icon-book { display: none; }
+#form label {
+    clear: both;
+    padding: 0.5em;
+    min-width: 10em;
+}
+
+#form #form_articleDate, #form #form_articleShown {
+    display: inline-block;
+}
+
+#form textarea {
+    display: block;
+    width: 80%;
+    min-height: 10em;
+}
+#form button {
+    margin: 1em;
+    font-size: larger;
+}
 
 @media (min-width: 768px) {
     #wrapper { width: 80%; margin: 2em auto; }

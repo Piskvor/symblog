@@ -13,7 +13,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block login %}<div class="login"><a href="{{ path('private') }}">Log in</a></div>{% endblock %}
+        {% block links %}<div class="login"><a href="{{ path('private') }}">Log in</a></div>{% endblock %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

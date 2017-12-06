@@ -1,0 +1,11 @@
+{% extends 'private/index.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <h1>Admin area</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

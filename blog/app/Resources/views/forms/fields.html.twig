@@ -1,0 +1,13 @@
+{%- block button_widget -%}
+    {%- if label is not same as(false) and label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{%- if attr is not empty and attr.class is not same as (false) -%}<span class="actionButton"></span>{%- endif -%}{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
+{%- endblock button_widget -%}

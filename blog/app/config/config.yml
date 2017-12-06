@@ -35,7 +35,10 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-
+    paths:
+        '%kernel.project_dir%/vendor/adamquaile/symfony-fieldset-bundle/Resources/views/Types': __main__
+    form_themes:
+        - 'forms/fields.html.twig'
 # Doctrine Configuration
 doctrine:
     dbal:

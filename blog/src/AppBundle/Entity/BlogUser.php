@@ -5,11 +5,14 @@ namespace AppBundle\Entity;
 
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Doctrine\ORM\Mapping as ORM;
+use /** @noinspection PhpUnusedAliasInspection - used by annotations */
+    Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="blog_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BlogUserRepository")
+ * @UniqueEntity("username")
  */
 class BlogUser implements UserInterface, \Serializable
 {

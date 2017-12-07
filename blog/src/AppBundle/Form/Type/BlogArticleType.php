@@ -39,7 +39,9 @@ class BlogArticleType extends AbstractType
             ))
             ->add('articleShown', ChoiceType::class, array(
                 'choices' => array("No (hidden)" => 0, "Yes (published)" => 1), 'expanded' => true))
-            ->add('articleText', TextareaType::class)
+            ->add('articleText', TextareaType::class, array(
+                'attr' => array(
+                    'class' => 'tinymce')))
             ->add('tags', CollectionType::class, array(
                 'entry_type' => ArticleTagType::class,
                 'entry_options' => array(

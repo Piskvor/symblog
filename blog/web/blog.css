@@ -32,32 +32,33 @@ code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break
 #welcome h1 span { display: block; font-size: 75%; }
 #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
 #icon-book { display: none; }
-#form label {
+
+form #blog_article label {
     clear: both;
     padding: 0.5em;
     min-width: 10em;
 }
 
-#form #form_articleDate, #form #form_articleShown {
+form #blog_article #form_articleDate, form #blog_article #blog_article_articleShown {
     display: inline-block;
 }
 
-#form textarea {
+form #blog_article textarea {
     display: block;
     width: 80%;
     min-height: 10em;
     margin-left: 1em;
 }
-#form button {
+form #blog_article button {
     margin: 1em;
     font-size: larger;
 }
 
-#form .long-text {
+form #blog_article .long-text {
     min-width: 25em;
 }
 
-fieldset #form_buttons > div {
+form fieldset #blog_article_buttons > div {
     display: inline-block;
 }
 

@@ -72,6 +72,16 @@ class BlogArticle
         $this->tags = new ArrayCollection();
     }
 
+    public function addTag(ArticleTag $tag)
+    {
+        $this->tags->add($tag);
+    }
+
+    public function removeTag(ArticleTag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
     /**
      * caveat: race condition; if this is an issue, we could use alternate counting, e.g. nginx access log -> redis -> periodic update into db (minimal overhead, works with static content)
      */

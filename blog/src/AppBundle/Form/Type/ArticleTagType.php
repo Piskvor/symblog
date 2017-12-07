@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagType extends AbstractType
+class ArticleTagType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

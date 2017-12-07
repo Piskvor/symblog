@@ -3,26 +3,12 @@ declare(strict_types=1);
 
 namespace AppBundle\Controller;
 
-use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
-use AppBundle\Form\Type\TagType;
-use Doctrine\ORM\Query\Expr\Select;
+use AppBundle\Form\Type\BlogArticleType;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use AppBundle\Entity\BlogArticle;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,43 +67,7 @@ class PrivateController extends Controller
     public function formAction(Request $request, BlogArticle $blogArticle)
     {
 
-        /** @var FormBuilder $form */
-        $formBuilder = $this->createFormBuilder($blogArticle);
-        if ($blogArticle->getId()) {
-            $actionName = 'update';
-            $formBuilder->add('id', HiddenType::class);
-        } else {
-            $actionName = 'create';
-        }
-        $formBuilder->add('title', TextType::class, array(
-            'attr' => array(
-                'class' => 'long-text')))
-            ->add('url', TextType::class, array(
-                'attr' => array(
-                    'class' => 'long-text')))
-            ->add('articleDate', DateType::class, array(
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
-            ))
-            ->add('articleShown', ChoiceType::class, array(
-                'choices' => array("Hidden" => 0, "Published" => 1), 'expanded' => true))
-            ->add('articleText', TextareaType::class)
-            ->add('tags', CollectionType::class, array(
-                'entry_type' => TagType::class,
-                'entry_options' => array('label' => false),
-            ))
-            ->add('buttons', FieldsetType::class, [
-                'label' => false,
-                'legend' => '',
-                'fields' => function (FormBuilderInterface $fbuilder) use ($actionName) {
-                    $fbuilder
-                        ->add('save', SubmitType::class, array('label' => $actionName . ' article', 'attr' => array('class' => 'button-' . $actionName)))
-                        ->add('cancel', ButtonType::class, array('label' => 'back to list', 'attr' => array('class' => 'button-cancel')));
-                }
-            ]);;
-
-        /** @var Form $form */
-        $form = $formBuilder->getForm();
+        $form = $this->createForm(BlogArticleType::class, $blogArticle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

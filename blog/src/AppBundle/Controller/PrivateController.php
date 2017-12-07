@@ -4,10 +4,13 @@ declare(strict_types=1);
 namespace AppBundle\Controller;
 
 use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
+use AppBundle\Form\Type\TagType;
+use Doctrine\ORM\Query\Expr\Select;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use AppBundle\Entity\BlogArticle;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -99,6 +102,10 @@ class PrivateController extends Controller
             ->add('articleShown', ChoiceType::class, array(
                 'choices' => array("Hidden" => 0, "Published" => 1), 'expanded' => true))
             ->add('articleText', TextareaType::class)
+            ->add('tags', CollectionType::class, array(
+                'entry_type' => TagType::class,
+                'entry_options' => array('label' => false),
+            ))
             ->add('buttons', FieldsetType::class, [
                 'label' => false,
                 'legend' => '',

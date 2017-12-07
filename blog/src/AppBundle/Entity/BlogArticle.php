@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Doctrine\ORM\Mapping as ORM;
 
@@ -53,7 +54,7 @@ class BlogArticle
     /**
      * @var \Doctrine\Common\Collections\Collection|ArticleTag[]
      *
-     * @ORM\ManyToMany(targetEntity="ArticleTag", inversedBy="article_tag")
+     * @ORM\ManyToMany(targetEntity="ArticleTag")
      * @ORM\JoinTable(
      *  name="blog_article_tags",
      *  joinColumns={
@@ -65,6 +66,11 @@ class BlogArticle
      * )
      */
     private $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * caveat: race condition; if this is an issue, we could use alternate counting, e.g. nginx access log -> redis -> periodic update into db (minimal overhead, works with static content)

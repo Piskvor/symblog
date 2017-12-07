@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +36,58 @@ class ArticleTag
      * @ORM\Column(name="shown", type="boolean")
      */
     private $shown = true;
+    /**
+     * @var \Doctrine\Common\Collections\Collection|BlogArticle[]
+     *
+     * @ORM\ManyToMany(targetEntity="BlogArticle")
+     * @ORM\JoinTable(
+     *  name="blog_article_tags",
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="blog_article_id", referencedColumnName="id")
+     *  },
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="article_tag_id", referencedColumnName="id")
+     *  }
+     * )
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+
+    /**
+     * @return BlogArticle[]|\Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * @param BlogArticle[]|\Doctrine\Common\Collections\Collection $articles
+     */
+    public function setArticles($articles)
+    {
+        $this->articles = $articles;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShown(): bool
+    {
+        return $this->shown;
+    }
+
+    /**
+     * @param bool $shown
+     */
+    public function setShown(bool $shown)
+    {
+        $this->shown = $shown;
+    }
 
     /**
      * Get id

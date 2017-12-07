@@ -49,7 +49,7 @@ form #blog_article textarea {
     min-height: 10em;
     margin-left: 1em;
 }
-form #blog_article button {
+form #blog_article fieldset button {
     margin: 1em;
     font-size: larger;
 }

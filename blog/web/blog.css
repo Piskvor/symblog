@@ -46,10 +46,46 @@ code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break
     display: block;
     width: 80%;
     min-height: 10em;
+    margin-left: 1em;
 }
 #form button {
     margin: 1em;
     font-size: larger;
+}
+
+#form .long-text {
+    min-width: 25em;
+}
+
+fieldset #form_buttons > div {
+    display: inline-block;
+}
+
+@font-face {
+    font-family: 'Web Symbols';
+    src: url('/font/WebSymbols-Regular.eot');
+    src: url('/font/WebSymbols-Regular.eot?#iefix') format('embedded-opentype'), url('/font/WebSymbols-Regular.woff') format('woff'), url('/font/WebSymbols-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.actionButton {
+    /*noinspection CssNoGenericFontName*/
+    font-family: 'Web Symbols';
+    padding: 0.2em;
+    text-decoration: none;
+    margin-right: 0.3em;
+}
+.button-wait .actionButton::before {
+    content: 'P';
+}
+.button-create .actionButton::before {
+    content: '+';
+}
+.button-update .actionButton::before {
+    content: '/';
+}
+.button-cancel .actionButton::before {
+    content: '×';
 }
 
 @media (min-width: 768px) {

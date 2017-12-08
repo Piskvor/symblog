@@ -85,4 +85,21 @@ class PrivateController extends Controller
 
     }
 
+    /**
+     * @Route("/private", name="privateIndex")
+     */
+    public function privateAction() {
+        return $this->redirectToRoute('list');
+    }
+
+    /**
+     * @Route("/private/list", name="private")
+     */
+    public function listAction()
+    {
+        return $this->render('private/index.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]);
+    }
+
 }

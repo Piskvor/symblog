@@ -89,6 +89,10 @@ form fieldset #blog_article_buttons > div {
     content: '×';
 }
 
+.button-login .actionButton::before {
+    content: 'w';
+}
+
 @media (min-width: 768px) {
     #wrapper { width: 80%; margin: 2em auto; }
     #icon-book { display: inline-block; }

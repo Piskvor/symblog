@@ -6,5 +6,6 @@ jQuery(document).ready(function ($) {
             window.location = 'list';
             event.preventDefault();
         }
-    })
+    });
+    $('.timeago').timeago();
 });

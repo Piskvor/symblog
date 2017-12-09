@@ -25,6 +25,9 @@
                 document.write(decodeURIComponent("%3Cscript src='/js/jquery-3.2.1.min.js' type='text/javascript' charset='utf-8'%3E%3C/script%3E"));
             }
         </script>
+        {% if locale is defined and locale is not empty %}
+            <script src="/js/locales/jquery.timeago.{{ locale }}.js"></script>
+        {% endif %}
         <script src="/js/jquery.timeago.js"></script>
         <script src="/js/blog.js"></script>
     </head>

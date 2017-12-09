@@ -45,7 +45,10 @@ twig:
         site_title: '%site_title%'
         page_extension: '%page_extension%'
         canonical_base: '%canonical_base%'
-
+        locale: '%locale%'
+    date:
+        interval_format: '%%d days'
+        format: 'Y-m-d\TH:i:sP'
 # Doctrine Configuration
 doctrine:
     dbal:

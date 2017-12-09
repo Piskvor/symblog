@@ -43,8 +43,9 @@ class ArticleTag
      */
     private $articles;
 
-    public function __construct()
+    public function __construct($name = '')
     {
+        $this->name = $name;
         $this->articles = new ArrayCollection();
     }
 

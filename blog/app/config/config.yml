@@ -41,6 +41,11 @@ twig:
         '%kernel.project_dir%/vendor/adamquaile/symfony-fieldset-bundle/Resources/views/Types': __main__
     form_themes:
         - 'forms/fields.html.twig'
+    globals:
+        site_title: '%site_title%'
+        page_extension: '%page_extension%'
+        canonical_base: '%canonical_base%'
+
 # Doctrine Configuration
 doctrine:
     dbal:

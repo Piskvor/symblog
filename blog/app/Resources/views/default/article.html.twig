@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% set canonical_path = "/a/#{article.url}#{page_extension}" %}
+{% set page_title = "#{article.title} | #{site_title}" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block body %}
+    <div id="wrapper">
+        <h1>{{ article.title }} | <a href="{{ path('homepage') }}">{{ site_title }}</a></h1>
+        <div class="article-date"><time class="timeago" datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time></div>
+        <div class="article-text">{{ article.articleText|raw }}</div>
+    </div>
+{% endblock %}

@@ -22,7 +22,7 @@ class BlogArticle
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=1024)
+     * @ORM\Column(type="string", length=150)
      * @var string
      */
     private $title;

@@ -65,6 +65,11 @@ class ArticleTag
         $this->articles = $articles;
     }
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * @return bool
      */

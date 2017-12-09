@@ -18,8 +18,11 @@ class DefaultContent extends Fixture
 
         $fooTag = new ArticleTag('foo');
         $barTag = new ArticleTag('bar');
+        $qagTag = new ArticleTag('qag');
+        $qagTag->setShown(false);
         $manager->persist($fooTag);
         $manager->persist($barTag);
+        $manager->persist($qagTag);
         $blogArticle = new BlogArticle();
         $blogArticle->setUrl('baz-quux');
         $blogArticle->setArticleText('<b>adasd</b>lklklk');
@@ -28,6 +31,7 @@ class DefaultContent extends Fixture
         $blogArticle->setArticleDate(new \DateTime());
         $blogArticle->addTag($fooTag);
         $blogArticle->addTag($barTag);
+        $blogArticle->addTag($qagTag);
         $manager->persist($blogArticle);
         $manager->flush();
     }

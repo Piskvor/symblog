@@ -7,7 +7,24 @@
 {% block body %}
     <div id="wrapper">
         <h1>{{ article.title }} | <a href="{{ path('homepage') }}">{{ site_title }}</a></h1>
-        <div class="article-date"><time class="timeago" datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time></div>
+        <div class="article-date">
+            <time class="timeago"
+                  datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time>
+        </div>
         <div class="article-text">{{ article.articleText|raw }}</div>
+        <div class="article-tags">
+            <span class="article-tags-legend">
+                Tags:
+            </span>
+            <span class="article-tags-content">
+                {% for tag in article.tags %}
+                    {% if tag.shown %}
+                    <span class="article-tag">
+                        <a href="{{ path('tagged') }}/{{ tag }}">{{ tag }}</a>
+                    </span>
+                    {% endif %}
+                {% endfor %}
+            </span>
+        </div>
     </div>
 {% endblock %}

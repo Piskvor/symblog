@@ -40,6 +40,15 @@ class ArticleTag
      * @var \Doctrine\Common\Collections\Collection|BlogArticle[]
      *
      * @ORM\ManyToMany(targetEntity="BlogArticle")
+     * @ORM\JoinTable(
+     *  name="blog_article_tags",
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="blog_article_id", referencedColumnName="id")
+     *  },
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="article_tag_id", referencedColumnName="id")
+     *  }
+     * )
      */
     private $articles;
 

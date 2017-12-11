@@ -26,10 +26,7 @@ class DefaultController extends Controller
         ), array(
             'articleDate' => 'DESC'
         ));
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'articles' => $blogArticles
-        ]);
+        return $this->commonRender('default/index.html.twig', $blogArticles, $page);
     }
 
     /**
@@ -73,11 +70,12 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/tagged/{tagName}", requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = ""}, name="tagged")
+     * @Route("/tagged/{tagName}", requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = "", "page" = "1"}, name="tagged")
+     * @Route("/tagged/{tagName}/{page}", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"}, requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = ""}, name="taggedPage")
      * @param string $tagName
      * @return Response
      */
-    public function tagAction($tagName) {
+    public function tagAction($tagName, $page) {
         $tagRepo = $this->getDoctrine()
             ->getRepository(ArticleTag::class);
         /** @var ArticleTag $tag */
@@ -90,11 +88,23 @@ class DefaultController extends Controller
         } else {
             $articles = null;
         }
-        return $this->render('default/tag.html.twig', [
+        return $this->commonRender('default/tag.html.twig', $articles, $page, $tag);
+    }
+
+    private function commonRender($view, $articles, $page, $tag = null)
+    {
+        $itemCount = $this->getParameter('articles_per_page');
+        $totalPages = ceil(count($articles) / $itemCount);
+        $startOffset = floor($page - 1 * $itemCount);
+        $chosenArticles = array_slice($articles, $startOffset, $itemCount);
+        return $this->render($view, [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'tag' => $tag,
-            'articles' => $articles
+            'articles' => $chosenArticles,
+            'page' => $page,
+            'totalPages' => $totalPages
         ]);
     }
+
 
 }

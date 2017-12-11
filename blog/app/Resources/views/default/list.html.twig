@@ -1,7 +1,7 @@
 {% if articles is not empty %}
     {% for article in articles %}
         <div>
-            <h3><a href="/a/{{ article.url }}">{{ article.title }}</a></h3>
+            <h3><a href="{{ path('article', { "slug": article.url }) }}">{{ article.title }}</a></h3>
         </div>
         <div class="pager"></div>
     {% endfor %}

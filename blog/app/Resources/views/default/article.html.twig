@@ -20,7 +20,7 @@
                 {% for tag in article.tags %}
                     {% if tag.shown %}
                     <span class="article-tag">
-                        <a href="{{ path('tagged') }}/{{ tag }}">{{ tag }}</a>
+                        <a href="{{ path('tagged', { "tagName": tag.name }) }}">{{ tag.name }}</a>
                     </span>
                     {% endif %}
                 {% endfor %}

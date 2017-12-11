@@ -7,25 +7,18 @@ use AppBundle\Entity\BlogArticle;
 use AppBundle\Repository\BlogArticleRepository;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractDisplayController
 {
     /**
      * @Route("/{page}", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"},  name="homepage")
+     * @param int $page
      * @return Response
      */
-    public function indexAction($page)
+    public function indexAction($page = 1)
     {
-        /** @var BlogArticleRepository $blogArticleRepo */
-        $blogArticleRepo = $this->getDoctrine()
-            ->getRepository(BlogArticle::class);
-        $blogArticles = $blogArticleRepo->findBy(array(
-            'articleShown' => 1
-        ), array(
-            'articleDate' => 'DESC'
-        ));
+        $blogArticles = $this->getArticles();
         return $this->commonRender('default/index.html.twig', $blogArticles, $page);
     }
 
@@ -44,24 +37,12 @@ class DefaultController extends Controller
                 $slug = substr($slug, 0, $slugShortenedLength);
             }
         }
-        /** @var BlogArticleRepository $blogArticleRepo */
-        $blogArticleRepo = $this->getDoctrine()
-            ->getRepository(BlogArticle::class);
-        $blogArticle = $blogArticleRepo->findOneBy(array(
-            'url' => $slug,
-            'articleShown' => 1
-        ));
+        $blogArticle = $this->getArticleBySlug($slug);
         if (!$blogArticle) {
-            $id = (int)$slug;
-            if ($id > 0) {
-                $blogArticle = $blogArticleRepo->findOneBy(array(
-                    'id' => $id,
-                    'articleShown' => 1
-                ));
-            }
-            if (!$blogArticle) {
-                return $this->redirectToRoute('homepage');
-            }
+            $blogArticle = $this->getArticleById($slug);
+        }
+        if (!$blogArticle) {
+            $this->redirectToRoute('homepage');
         }
         return $this->render('default/article.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
@@ -70,12 +51,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/tagged/{tagName}", requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = "", "page" = "1"}, name="tagged")
+     * @Route("/tagged/{tagName}", requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = ""}, name="tagged")
      * @Route("/tagged/{tagName}/{page}", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"}, requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = ""}, name="taggedPage")
      * @param string $tagName
+     * @param int $page
      * @return Response
      */
-    public function tagAction($tagName, $page) {
+    public function tagAction($tagName, $page = 1) {
         $tagRepo = $this->getDoctrine()
             ->getRepository(ArticleTag::class);
         /** @var ArticleTag $tag */
@@ -88,18 +70,37 @@ class DefaultController extends Controller
         } else {
             $articles = null;
         }
-        return $this->commonRender('default/tag.html.twig', $articles, $page, $tag);
+        return $this->commonRender('default/tag.html.twig', $articles, $page, $tagName);
     }
 
-    private function commonRender($view, $articles, $page, $tag = null)
+    /**
+     * @param string $view
+     * @param \Doctrine\Common\Collections\Collection|BlogArticle[] $articles
+     * @param int $page
+     * @param string|null $tagName
+     * @return Response
+     */
+    private function commonRender($view, $articles, $page = 1, $tagName = null)
     {
+        if ($page < 1) {
+            $page = 1;
+        }
         $itemCount = $this->getParameter('articles_per_page');
         $totalPages = ceil(count($articles) / $itemCount);
         $startOffset = floor($page - 1 * $itemCount);
-        $chosenArticles = array_slice($articles, $startOffset, $itemCount);
+        if (!empty($articles)) {
+            if (is_array($articles)) {
+                $articlesArray = $articles;
+            } else {
+                $articlesArray = $articles->toArray();
+            }
+            $chosenArticles = array_slice($articlesArray, $startOffset, $itemCount);
+        } else {
+            $chosenArticles = array();
+        }
         return $this->render($view, [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'tag' => $tag,
+            'tag' => $tagName,
             'articles' => $chosenArticles,
             'page' => $page,
             'totalPages' => $totalPages

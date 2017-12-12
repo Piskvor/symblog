@@ -89,6 +89,10 @@ form fieldset #blog_article_buttons > div {
     content: '×';
 }
 
+.pager-page > * {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
 .pager-page-current {
     font-weight: bold;
 }

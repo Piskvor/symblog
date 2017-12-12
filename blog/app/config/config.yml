@@ -60,6 +60,8 @@ doctrine:
         default_table_options:
             charset: utf8mb4
             collate: utf8mb4_czech_ci
+        types:
+            ip: Darsyn\IP\Doctrine\IpType
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

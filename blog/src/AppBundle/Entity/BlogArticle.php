@@ -37,7 +37,7 @@ class BlogArticle
      */
     private $articleText;
     /**
-     * @ORM\Column(name="article_date", type="date")
+     * @ORM\Column(name="article_date", type="datetime")
      * @var \DateTime
      */
     private $articleDate;

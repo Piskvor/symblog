@@ -6,7 +6,7 @@
 {% block title %}{{ page_title }}{% endblock %}
 {% block body %}
     <div id="wrapper">
-        <h1>{{ article.title }} | <a href="{{ path('homepage') }}">{{ site_title }}</a></h1>
+        <h1>{{ article.title }} | <a href="{{ path('index') }}">{{ site_title }}</a></h1>
         <div class="article-date">
             <time class="timeago"
                   datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time>

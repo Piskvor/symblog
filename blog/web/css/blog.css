@@ -89,6 +89,15 @@ form fieldset #blog_article_buttons > div {
     content: '×';
 }
 
+.pager-page-current {
+    font-weight: bold;
+}
+
+.pager-page-prev, .pager-page-next {
+    /*noinspection CssNoGenericFontName*/
+    font-family: 'Web Symbols';
+}
+
 .button-login .actionButton::before {
     content: 'w';
 }

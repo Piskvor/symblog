@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends AbstractDisplayController
 {
     /**
-     * @Route("/{page}", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"},  name="homepage")
+     * @Route("/{page}", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"},  name="index")
      * @param int $page
      * @return Response
      */
     public function indexAction($page = 1)
     {
         $blogArticles = $this->getArticles();
-        return $this->commonRender('default/index.html.twig', $blogArticles, $page);
+        return $this->commonRender('index', $blogArticles, $page);
     }
 
     /**
@@ -51,7 +51,7 @@ class DefaultController extends AbstractDisplayController
 
     /**
      * @Route("/tagged/{tagName}", requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = ""}, name="tagged")
-     * @Route("/tagged/{tagName}/{page}", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"}, requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = ""}, name="taggedPage")
+     * @Route("/tagged/{tagName}/{page}", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"}, requirements={"tagName" = "[a-zA-Z0-9._-]+"}, defaults={"tagName" = ""}, name="tag")
      * @param string $tagName
      * @param int $page
      * @return Response
@@ -69,24 +69,24 @@ class DefaultController extends AbstractDisplayController
         } else {
             $articles = null;
         }
-        return $this->commonRender('default/tag.html.twig', $articles, $page, $tagName);
+        return $this->commonRender('tag', $articles, $page, $tagName);
     }
 
     /**
-     * @param string $view
+     * @param string $route
      * @param \Doctrine\Common\Collections\Collection|BlogArticle[] $articles
      * @param int $page
      * @param string|null $tagName
      * @return Response
      */
-    private function commonRender($view, $articles, $page = 1, $tagName = null)
+    private function commonRender($route, $articles, $page = 1, $tagName = null)
     {
         if ($page < 1) {
             $page = 1;
         }
         $itemCount = $this->getParameter('articles_per_page');
         $totalPages = ceil(count($articles) / $itemCount);
-        $startOffset = floor($page - 1 * $itemCount);
+        $startOffset = floor(($page - 1) * $itemCount);
         if (!empty($articles)) {
             if (is_array($articles)) {
                 $articlesArray = $articles;
@@ -97,8 +97,9 @@ class DefaultController extends AbstractDisplayController
         } else {
             $chosenArticles = array();
         }
-        return $this->render($view, [
+        return $this->render('default/' . $route . '.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'route' => $route,
             'tag' => $tagName,
             'articles' => $chosenArticles,
             'page' => $page,

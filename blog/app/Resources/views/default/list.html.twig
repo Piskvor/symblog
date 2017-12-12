@@ -2,9 +2,44 @@
     {% for article in articles %}
         <div>
             <h3><a href="{{ path('article', { "slug": article.url }) }}">{{ article.title }}</a></h3>
+            <time class="timeago"
+                  datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time>
         </div>
-        <div class="pager"></div>
     {% endfor %}
+    {% if totalPages > 1 %}
+        <div class="pager">
+            {%  if page > 1 %}
+                {% if tag %}
+                    {% set pageUrl = path(route, { "tagName": tag, "page": page - 1 }) %}
+                {% else %}
+                    {% set pageUrl = path(route, { "page": page - 1 }) %}
+                {% endif %}
+                <span class="pager-page pager-page-prev"><a href="{{ pageUrl }}">(</a></span>
+            {% endif %}
+            {% for p in range(1, totalPages) %}
+            <span class="pager-page{% if p == page %} pager-page-current{% endif %}">
+                {% if p == page %}
+                    {{ p }}
+                {% else %}
+                    {% if tag %}
+                        {% set pageUrl = path(route, { "tagName": tag, "page": p }) %}
+                    {% else %}
+                        {% set pageUrl = path(route, { "page": p }) %}
+                    {% endif %}
+                    <a href="{{ pageUrl }}">{{ p }}</a>
+                {% endif %}
+            </span>
+            {% endfor %}
+            {%  if page < totalPages %}
+                {% if tag %}
+                    {% set pageUrl = path(route, { "tagName": tag, "page": page + 1 }) %}
+                {% else %}
+                    {% set pageUrl = path(route, { "page": page + 1 }) %}
+                {% endif %}
+                <span class="pager-page pager-page-next"><a href="{{ pageUrl }}">)</a></span>
+            {% endif %}
+        </div>
+    {% endif %}
 {% else %}
     <div>
         Nothing yet...

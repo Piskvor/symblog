@@ -25,10 +25,12 @@
                 document.write(decodeURIComponent("%3Cscript src='/js/jquery-3.2.1.min.js' type='text/javascript' charset='utf-8'%3E%3C/script%3E"));
             }
         </script>
+        <script src="/js/jquery.timeago.js"></script>
         {% if locale is defined and locale is not empty %}
             <script src="/js/locales/jquery.timeago.{{ locale }}.js"></script>
         {% endif %}
-        <script src="/js/jquery.timeago.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.min.css" />
+        <script src="/js/jquery.datetimepicker.full.min.js"></script>
         <script src="/js/blog.js"></script>
     </head>
     <body>

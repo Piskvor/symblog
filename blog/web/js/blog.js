@@ -57,4 +57,7 @@ jQuery(document).ready(function($) {
         }
     });
     $('.timeago').timeago();
+    $('.datetime-picker').datetimepicker({
+        format:'Y-m-d H:i'
+    });
 });

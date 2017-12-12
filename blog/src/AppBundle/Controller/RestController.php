@@ -13,7 +13,8 @@ class RestController extends AbstractDisplayController
 {
 
     /**
-     * @Route("/articles", name="rest_articles")
+     * @Route("/article", name="rest_articles")
+     * @Route("/articles", name="rest_articles_")
      * @return JsonResponse
      */
     public function cgetAction()
@@ -32,6 +33,7 @@ class RestController extends AbstractDisplayController
 
     /**
      * @Route("/article/{id}", requirements={"id" = "[0-9]*"}, name="rest_article")
+     * @Route("/articles/{id}", requirements={"id" = "[0-9]*"}, name="rest_article_")
      * @param int $id
      * @return JsonResponse
      */

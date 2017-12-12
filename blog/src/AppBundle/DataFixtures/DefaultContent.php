@@ -18,11 +18,15 @@ class DefaultContent extends Fixture
 
         $fooTag = new ArticleTag('foo');
         $barTag = new ArticleTag('bar');
+        $bazTag = new ArticleTag('baz');
         $qagTag = new ArticleTag('qag');
         $qagTag->setShown(false);
         $manager->persist($fooTag);
         $manager->persist($barTag);
+        $manager->persist($bazTag);
         $manager->persist($qagTag);
+        $manager->flush();
+
         $blogArticle = new BlogArticle();
         $blogArticle->setUrl('baz-quux');
         $blogArticle->setArticleText('<b>adasd</b>lklklk');
@@ -33,6 +37,44 @@ class DefaultContent extends Fixture
         $blogArticle->addTag($barTag);
         $blogArticle->addTag($qagTag);
         $manager->persist($blogArticle);
+
+        $blogArticle = new BlogArticle();
+        $blogArticle->setUrl('correct-horse');
+        $blogArticle->setArticleText('correct horse battery staple');
+        $blogArticle->setTitle('Correct Horse');
+        $blogArticle->setArticleShown(true);
+        $blogArticle->setArticleDate(new \DateTime());
+        $blogArticle->addTag($bazTag);
+        $blogArticle->addTag($barTag);
+        $blogArticle->addTag($qagTag);
+        $manager->persist($blogArticle);
+
+        $blogArticle = new BlogArticle();
+        $blogArticle->setUrl('battery-staple');
+        $blogArticle->setArticleText('correct horse battery staple');
+        $blogArticle->setTitle('Battery Staple');
+        $blogArticle->setArticleShown(true);
+        $blogArticle->setArticleDate(new \DateTime());
+        $blogArticle->addTag($qagTag);
+        $manager->persist($blogArticle);
+
+        $blogArticle = new BlogArticle();
+        $blogArticle->setUrl('asdf');
+        $blogArticle->setArticleText('asdfghjkl');
+        $blogArticle->setTitle('asdf');
+        $blogArticle->setArticleShown(true);
+        $blogArticle->setArticleDate(new \DateTime());
+        $blogArticle->addTag($fooTag);
+        $manager->persist($blogArticle);
+
+        $blogArticle = new BlogArticle();
+        $blogArticle->setUrl('qwert');
+        $blogArticle->setArticleText('qwertyuiop');
+        $blogArticle->setTitle('qwert');
+        $blogArticle->setArticleShown(true);
+        $blogArticle->setArticleDate(new \DateTime());
+        $manager->persist($blogArticle);
+
         $manager->flush();
     }
 }

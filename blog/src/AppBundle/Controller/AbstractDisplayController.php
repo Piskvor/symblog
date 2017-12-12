@@ -43,7 +43,7 @@ class AbstractDisplayController extends Controller
         if (!$blogArticle) { // retry as an ID
             return null;
         }
-        $blogArticle->incrementViews();
+        $this->incrementViews($blogArticle);
         return $blogArticle;
     }
 
@@ -67,7 +67,18 @@ class AbstractDisplayController extends Controller
         if (!$blogArticle) {
             return null;
         }
-        $blogArticle->incrementViews();
+        $this->incrementViews($blogArticle);
         return $blogArticle;
+    }
+
+    /**
+     * @param BlogArticle $blogArticle
+     */
+    private function incrementViews($blogArticle)
+    {
+        $blogArticle->incrementViews();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($blogArticle);
+        $em->flush();
     }
 }

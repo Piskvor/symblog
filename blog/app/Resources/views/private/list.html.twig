@@ -5,7 +5,7 @@
             <div><time class="timeago"
                   datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time>, <span class="article-views"><span class="article-views-number">{{ article.articleViews }}</span> views</span>
             </div>
-            <div>Preview: <a href="{{ path('article', { "slug": article.url }) }}">{{ article.articleText|striptags|slice(0,160) }}</a></div>
+            <div>Preview: <a href="{{ path('article', { "slug": article.url }) }}{{ page_extension }}">{{ article.articleText|striptags|slice(0,160) }}</a></div>
         </div>
     {% endfor %}
 {% else %}

@@ -2,8 +2,10 @@
     {% for article in articles %}
         <div class="{% if article.articleShown %}article-shown{% else %}article-hidden{% endif %}">
             <h3><a href="{{ path('edit', { "id": article.id }) }}">{{ article.title }}</a></h3>
-            <time class="timeago"
+            <div><time class="timeago"
                   datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time>, <span class="article-views"><span class="article-views-number">{{ article.articleViews }}</span> views</span>
+            </div>
+            <div>Preview: <a href="{{ path('article', { "slug": article.url }) }}">{{ article.articleText|striptags|slice(0,160) }}</a></div>
         </div>
     {% endfor %}
 {% else %}

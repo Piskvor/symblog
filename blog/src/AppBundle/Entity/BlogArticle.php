@@ -54,7 +54,7 @@ class BlogArticle
     /**
      * @var \Doctrine\Common\Collections\Collection|ArticleTag[]
      *
-     * @ORM\ManyToMany(targetEntity="ArticleTag")
+     * @ORM\ManyToMany(targetEntity="ArticleTag",cascade={"persist"})
      * @ORM\JoinTable(
      *  name="blog_article_tags",
      *  joinColumns={

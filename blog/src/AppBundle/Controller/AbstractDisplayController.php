@@ -6,14 +6,16 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\BlogArticle;
 use AppBundle\Repository\BlogArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class AbstractDisplayController extends Controller
 {
 
     /**
+     * Return the articles that are user-visible
      * @return BlogArticle[]
      */
-    protected function getArticles()
+    protected function getShownArticles()
     {
         /** @var BlogArticleRepository $blogArticleRepo */
         $blogArticleRepo = $this->getDoctrine()
@@ -27,6 +29,7 @@ class AbstractDisplayController extends Controller
     }
 
     /**
+     * Given an article slug, return that article (if any)
      * @param string $slug
      * @return BlogArticle|null
      */
@@ -48,6 +51,7 @@ class AbstractDisplayController extends Controller
     }
 
     /**
+     * Given an article ID, return that article (if any)
      * @param int $id
      * @return BlogArticle|null
      */
@@ -72,6 +76,24 @@ class AbstractDisplayController extends Controller
     }
 
     /**
+     * Set the default caching headers - note that articles need to be cached privately!
+     * @param Response $response
+     * @param bool $shared
+     * @return Response
+     */
+    protected function markCacheable($response, $shared = true)
+    {
+        $response->setEtag(hash('md5', $response->getContent()));
+        if ($shared) {
+            $response->setSharedMaxAge($this->getParameter('shared_cache_seconds'));
+        } else {
+            $response->setMaxAge($this->getParameter('private_cache_seconds'));
+        }
+        return $response;
+    }
+
+    /**
+     * Increment the view count for a given article
      * @param BlogArticle $blogArticle
      */
     private function incrementViews($blogArticle)

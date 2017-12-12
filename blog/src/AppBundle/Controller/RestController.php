@@ -8,6 +8,7 @@ use AppBundle\Entity\BlogArticle;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class RestController extends AbstractDisplayController
 {
@@ -15,27 +16,28 @@ class RestController extends AbstractDisplayController
     /**
      * @Route("/article", name="rest_articles")
      * @Route("/articles", name="rest_articles_")
-     * @return JsonResponse
+     * @return Response
      */
     public function cgetAction()
     {
-        $blogArticles = $this->getArticles();
+        $blogArticles = $this->getShownArticles();
 
         $result = array();
         /** @var BlogArticle $blogArticle */
         foreach ($blogArticles as $blogArticle) {
             $result[] = $this->getBaseResult($blogArticle);
         }
-        return new JsonResponse(array(
+        $response = new JsonResponse(array(
             'articles' => $result
         ));
+        return $this->markCacheable($response);
     }
 
     /**
      * @Route("/article/{id}", requirements={"id" = "[0-9]*"}, name="rest_article")
      * @Route("/articles/{id}", requirements={"id" = "[0-9]*"}, name="rest_article_")
      * @param int $id
-     * @return JsonResponse
+     * @return Response
      */
     public function getAction($id)
     {
@@ -47,7 +49,8 @@ class RestController extends AbstractDisplayController
         } else {
             $result = array();
         }
-        return new JsonResponse($result, empty($result) ? 404 : 200);
+        $response = new JsonResponse($result, empty($result) ? 404 : 200);
+        return $this->markCacheable($response);
     }
 
     /**

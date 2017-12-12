@@ -16,8 +16,18 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: QUEENclockBOATNATIONSTEELWANTstarsPEACEbecamecongo
 
+    # number of articles per page
     articles_per_page: 2
     articles_per_page_private: 10
+
+    # display title
     site_title: "blog.martinec.name"
+
+    # extension appended to articles
     page_extension: ".html"
+    # base of the canonical URL
     canonical_base: "https://blog.martinec.name"
+
+    # number of seconds to cache - shared and private elements
+    shared_cache_seconds: 3600
+    private_cache_seconds: 600

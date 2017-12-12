@@ -17,7 +17,7 @@ class DefaultController extends AbstractDisplayController
      */
     public function indexAction($page = 1)
     {
-        $blogArticles = $this->getArticles();
+        $blogArticles = $this->getShownArticles();
         return $this->commonRender('index', $blogArticles, $page);
     }
 
@@ -43,10 +43,12 @@ class DefaultController extends AbstractDisplayController
         if (!$blogArticle) {
             $this->redirectToRoute('homepage');
         }
-        return $this->render('default/article.html.twig', [
+        $response = $this->render('default/article.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'article' => $blogArticle
         ]);
+        return $this->markCacheable($response, false); // if we share this, we lose view counting
+
     }
 
     /**
@@ -102,7 +104,7 @@ class DefaultController extends AbstractDisplayController
         } else {
             $chosenArticles = array();
         }
-        return $this->render('default/' . $route . '.html.twig', [
+        $response = $this->render('default/' . $route . '.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'route' => $route,
             'tag' => $tagName,
@@ -110,6 +112,7 @@ class DefaultController extends AbstractDisplayController
             'page' => $page,
             'totalPages' => $totalPages
         ]);
+        return $this->markCacheable($response, true); // if we share this, we lose
     }
 
 

@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ArticleTag;
 use AppBundle\Entity\BlogArticle;
-use AppBundle\Repository\BlogArticleRepository;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;

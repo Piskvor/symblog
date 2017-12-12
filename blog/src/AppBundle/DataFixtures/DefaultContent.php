@@ -75,6 +75,24 @@ class DefaultContent extends Fixture
         $blogArticle->setArticleDate(new \DateTime());
         $manager->persist($blogArticle);
 
+        $blogArticle = new BlogArticle();
+        $blogArticle->setUrl('qwert2');
+        $blogArticle->setArticleText('qwertyuiop2');
+        $blogArticle->setTitle('qwer2');
+        $blogArticle->addTag($fooTag);
+        $blogArticle->setArticleShown(false);
+        $blogArticle->setArticleDate(new \DateTime());
+        $manager->persist($blogArticle);
+
+        $blogArticle = new BlogArticle();
+        $blogArticle->setUrl('zxcv');
+        $blogArticle->setArticleText('zxcvbnm');
+        $blogArticle->setTitle('zxcvb');
+        $blogArticle->addTag($fooTag);
+        $blogArticle->setArticleShown(true);
+        $blogArticle->setArticleDate(new \DateTime());
+        $manager->persist($blogArticle);
+
         $manager->flush();
     }
 }

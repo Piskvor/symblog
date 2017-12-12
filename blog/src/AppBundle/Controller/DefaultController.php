@@ -61,11 +61,16 @@ class DefaultController extends AbstractDisplayController
             ->getRepository(ArticleTag::class);
         /** @var ArticleTag $tag */
         $tag = $tagRepo->findOneBy(array(
-            'name' => $tagName,
-            'shown' => 1
+            'name' => $tagName
         ));
         if ($tag) {
-            $articles = $tag->getArticles();
+            $articles = $tag->getArticles()->filter(
+                // getArticles returns all, regardless of shown status
+                function ($article) {
+                    /** @var BlogArticle $article */
+                    return $article->isArticleShown();
+                }
+            );
         } else {
             $articles = null;
         }

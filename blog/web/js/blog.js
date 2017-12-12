@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
         var $t = $(event.target);
         var text = $t.text();
         if (confirm("Really " + text + "?")) {
-            window.location = 'list';
+            window.location = '.';
             event.preventDefault();
         }
     });

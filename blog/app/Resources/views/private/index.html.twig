@@ -2,8 +2,9 @@
 
 {% block title %}blog.martinec.name private area{% endblock %}
 {% block body %}
-    <div id="wrapper">
+    <div id="wrapper" class="private">
         <h1>blog.martinec.name private area</h1>
+        {% include 'private/list.html.twig' %}
     </div>
 
 {% endblock %}

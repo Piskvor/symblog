@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AppBundle\Controller;
 
 use AppBundle\Form\Type\BlogArticleType;
+use AppBundle\Repository\BlogArticleRepository;
 use /** @noinspection PhpUnusedAliasInspection - used by annotations */
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -44,16 +45,16 @@ class PrivateController extends Controller
      */
     public function editAction(Request $request)
     {
-        $blogArticleId = (int)$request->query->get('id');
+        $id = (int)$request->query->get('id');
 
         /** @var BlogArticle $blogArticle */
         $blogArticle = $this->getDoctrine()
             ->getRepository(BlogArticle::class)
-            ->find($blogArticleId);
+            ->find($id);
 
         if (!$blogArticle) {
             throw $this->createNotFoundException(
-                'No article found for id ' . $blogArticleId
+                'No article found for id ' . $id
             );
         }
         return $this->formAction($request, $blogArticle);
@@ -86,19 +87,42 @@ class PrivateController extends Controller
     }
 
     /**
-     * @Route("/private", name="privateIndex")
+     * @Route("/private", name="private")
+     * @Route("/private/{page}", name="list", requirements={"page" = "[0-9]*"}, defaults={"page" = "1"})
+     * @param int $page
+     * @return Response
      */
-    public function privateAction() {
-        return $this->redirectToRoute('list');
-    }
+    public function listAction($page = 1) {
+        if ($page < 1) {
+            $page = 1;
+        }
+        /** @var BlogArticleRepository $blogArticleRepo */
+        $blogArticleRepo = $this->getDoctrine()
+            ->getRepository(BlogArticle::class);
+        $articles = $blogArticleRepo->findBy(array(
 
-    /**
-     * @Route("/private/list", name="private")
-     */
-    public function listAction()
-    {
+        ), array(
+            'articleDate' => 'DESC'
+        ));
+        $itemCount = $this->getParameter('articles_per_page_private');
+        $totalPages = (int)ceil(count($articles) / $itemCount);
+        $startOffset = (int)floor(($page - 1) * $itemCount);
+        if (!empty($articles)) {
+            if (is_array($articles)) {
+                $articlesArray = $articles;
+            } else {
+                $articlesArray = $articles->toArray();
+            }
+            $chosenArticles = array_slice($articlesArray, $startOffset, $itemCount);
+        } else {
+            $chosenArticles = array();
+        }
         return $this->render('private/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'articles' => $chosenArticles,
+            'route' => 'list',
+            'page' => $page,
+            'totalPages' => $totalPages
         ]);
     }
 

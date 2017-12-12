@@ -11,7 +11,7 @@
         Nothing yet...
     </div>
 {% endif %}
-{% if totalPages > 1 %}
+{% if totalPages > 1 or articles is empty %}
     <div class="pager">
         {%  if page > 1 %}
             {% if tag %}

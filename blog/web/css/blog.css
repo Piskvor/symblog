@@ -106,6 +106,18 @@ form fieldset #blog_article_buttons > div {
     content: 'w';
 }
 
+.private .article-shown {
+    background-color: rgb(219, 235, 216);
+}
+
+.private .article-hidden {
+    background-color: rgb(176, 176, 176);
+}
+
+.private .article-hidden h3 {
+    text-decoration: line-through;
+}
+
 @media (min-width: 768px) {
     #wrapper { width: 80%; margin: 2em auto; }
     #icon-book { display: inline-block; }

@@ -17,6 +17,7 @@ parameters:
     secret: QUEENclockBOATNATIONSTEELWANTstarsPEACEbecamecongo
 
     articles_per_page: 2
+    articles_per_page_private: 10
     site_title: "blog.martinec.name"
     page_extension: ".html"
     canonical_base: "https://blog.martinec.name"

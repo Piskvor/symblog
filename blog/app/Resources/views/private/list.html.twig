@@ -1,0 +1,36 @@
+{% if articles is not empty %}
+    {% for article in articles %}
+        <div class="{% if article.articleShown %}article-shown{% else %}article-hidden{% endif %}">
+            <h3><a href="{{ path('edit', { "id": article.id }) }}">{{ article.title }}</a></h3>
+            <time class="timeago"
+                  datetime="{{ article.articleDate|date }}">{{ article.articleDate|date('j.n.Y') }}</time>, <span class="article-views"><span class="article-views-number">{{ article.articleViews }}</span> views</span>
+        </div>
+    {% endfor %}
+{% else %}
+    <div>
+        Nothing yet...
+    </div>
+{% endif %}
+
+{% if totalPages > 1 or articles is empty %}
+    <div class="pager">
+        {%  if page > 1 %}
+            {% set pageUrl = path(route, { "page": page - 1 }) %}
+            <span class="pager-page pager-page-prev"><a href="{{ pageUrl }}">(</a></span>
+        {% endif %}
+        {% for p in range(1, totalPages) %}
+        <span class="pager-page{% if p == page %} pager-page-current{% endif %}">
+            {% if p == page %}
+                <span>{{ p }}</span>
+            {% else %}
+                {% set pageUrl = path(route, { "page": p }) %}
+                <a href="{{ pageUrl }}">{{ p }}</a>
+            {% endif %}
+        </span>
+        {% endfor %}
+        {%  if page < totalPages %}
+            {% set pageUrl = path(route, { "page": page + 1 }) %}
+            <span class="pager-page pager-page-next"><a href="{{ pageUrl }}">)</a></span>
+        {% endif %}
+    </div>
+{% endif %}

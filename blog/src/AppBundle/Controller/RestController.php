@@ -39,9 +39,13 @@ class RestController extends AbstractDisplayController
     {
         $blogArticle = $this->getArticleById($id);
 
-        $result = $this->getBaseResult($blogArticle);
-        $result['text'] = $blogArticle->getArticleText();
-        return new JsonResponse($result);
+        if ($blogArticle) {
+            $result = $this->getBaseResult($blogArticle);
+            $result['text'] = $blogArticle->getArticleText();
+        } else {
+            $result = array();
+        }
+        return new JsonResponse($result, empty($result) ? 404 : 200);
     }
 
     /**

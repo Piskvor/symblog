@@ -27,3 +27,5 @@ The simplest setup is via docker-compose, (setting up on a traditional server is
     
 (for the last command, see [docker-symfony/php-fpm/firstrun.sh](docker-symfony/php-fpm/firstrun.sh) )
 
+Note that the default setup creates a single admin user with a hardcoded password - you probably want to remove that from the DefaultContent [fixture](blog/src/AppBundle/DataFixtures/DefaultContent.php), or at least change the password ;)
+
